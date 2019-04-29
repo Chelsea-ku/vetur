@@ -3,19 +3,11 @@ import * as assert from 'assert';
 import * as _ from 'lodash';
 import { sleep } from '../util';
 
-export async function testDiagnostics(docUri: vscode.Uri, expectedDiagnostics: vscode.Diagnostic[], exact = false) {
+export async function testDiagnostics(docUri: vscode.Uri, expectedDiagnostics: vscode.Diagnostic[]) {
   // For diagnostics to show up
   await sleep(2000);
 
   const result = vscode.languages.getDiagnostics(docUri);
-
-  if (exact) {
-    assert.equal(
-      expectedDiagnostics.length,
-      result.length,
-      'Expected diagnostics length is not same as actual diagnostics one'
-    );
-  }
 
   expectedDiagnostics.forEach(ed => {
     assert.ok(

@@ -82,8 +82,7 @@ describe('Should find template-diagnostics in <template> region', () => {
           severity: vscode.DiagnosticSeverity.Error,
           message: "Argument of type 'string' is not assignable"
         }
-      ],
-      loose: true
+      ]
     },
     {
       file: 'v-slot.vue',
@@ -92,6 +91,16 @@ describe('Should find template-diagnostics in <template> region', () => {
           range: sameLineRange(2, 15, 16),
           severity: vscode.DiagnosticSeverity.Error,
           message: "Property 'c' does not exist on type"
+        }
+      ]
+    },
+    {
+      file: 'v-slot-scope.vue',
+      diagnostics: [
+        {
+          range: sameLineRange(4, 9, 10),
+          severity: vscode.DiagnosticSeverity.Error,
+          message: "Property 'a' does not exist on type"
         }
       ]
     },
@@ -188,7 +197,6 @@ describe('Should find template-diagnostics in <template> region', () => {
           severity: vscode.DiagnosticSeverity.Error,
           message: "Property 'b' is protected and only accessible within class 'Child' and its subclasses"
         },
-
         {
           range: sameLineRange(10, 16, 17),
           severity: vscode.DiagnosticSeverity.Error,
@@ -203,7 +211,7 @@ describe('Should find template-diagnostics in <template> region', () => {
       const docUri = getDocUri(`diagnostics/${t.file}`);
       await showFile(docUri);
       await sleep(FILE_LOAD_SLEEP_TIME);
-      await testDiagnostics(docUri, t.diagnostics, !t.loose);
+      await testDiagnostics(docUri, t.diagnostics);
     });
   });
 
@@ -222,5 +230,4 @@ describe('Should find template-diagnostics in <template> region', () => {
 interface TemplateDiagnosticTest {
   file: string;
   diagnostics: vscode.Diagnostic[];
-  loose?: boolean;
 }
